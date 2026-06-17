@@ -1,0 +1,6 @@
+[submodule "quickstart/themes/ananke"]
+	path = quickstart/themes/ananke
+	url = https://github.com/gohugo-ananke/ananke
+[submodule "mysite/themes/roxo-hugo"]
+	path = mysite/themes/roxo-hugo
+	url = https://github.com/furioustheme/roxo-hugo.git

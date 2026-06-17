@@ -6,6 +6,22 @@ import { formatDate } from "../../utils";
 
 import "../../styles/global.css";
 
+// 1. Tell Astro exactly what article pages to build ahead of time
+export async function getStaticPaths() {
+  const allArticles = await getCollection('blog');
+  
+  return allArticles.map(article => ({
+    params: { slug: article.slug }, // matches the [...slug] file name param
+    props: { article }              // passes the article data downward
+  }));
+}
+
+// 2. Accept the article object from props
+interface Props {
+  article: CollectionEntry<'blog'>;
+}
+
+
 const { slug } = Astro.params;
 
 if(slug === undefined) {

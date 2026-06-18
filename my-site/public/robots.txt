@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maxdatex.github.io/sitemap.xml
+Sitemap: https://maxdatex.github.io/sitemap-index.xml

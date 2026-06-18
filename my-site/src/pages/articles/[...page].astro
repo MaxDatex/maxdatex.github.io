@@ -1,0 +1,65 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ArticleCard from "../../components/ui/ArticleCard.astro";
+import SearchForm from "../../components/ui/SearchForm.astro";
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import type { GetStaticPathsOptions, Page } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const allBlogArticles: CollectionEntry<'blog'>[] = (await getCollection('blog'))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(allBlogArticles, { pageSize: 8 });
+}
+
+const { page } = Astro.props as { page: Page<CollectionEntry<'blog'>> };
+---
+
+<MainLayout
+  title="Positivus - Blog"
+  description="Explore the latest articles on digital brand storytelling, mobile experience optimization, web security, and fast deployment tactics from our team."
+>
+  <main class="space-y-20">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
+      <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">Our Blog</h2>
+        <p class="font-light sm:text-xl">We use an agile approach to test assumptions and connect with the needs of your audience early and often.</p>
+      </div>
+
+      <br />
+      <SearchForm />
+      <br />
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        {page.data.map(article => (
+          <ArticleCard article={article} />
+        ))}
+      </div>
+
+      <nav class="flex justify-center items-center gap-4 mt-12" aria-label="Pagination">
+  {page.url.prev
+    ? <a href={page.url.prev} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">← Prev</a>
+    : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">← Prev</span>
+  }
+
+  <span class="text-sm text-gray-500">{page.currentPage} / {page.lastPage}</span>
+
+  {page.url.next
+    ? <a href={page.url.next} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">Next →</a>
+    : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">Next →</span>
+  }
+</nav>
+
+<p class="text-center text-xs text-gray-400 mt-3">{page.total} articles total</p>
+
+<p class="text-center text-xs text-gray-400 mt-3">
+  {page.total} articles total
+</p>
+
+      <p class="text-center text-xs text-gray-400 mt-3">
+        Page {page.currentPage} of {page.lastPage} · {page.total} articles
+      </p>
+    </div>
+  </main>
+</MainLayout>

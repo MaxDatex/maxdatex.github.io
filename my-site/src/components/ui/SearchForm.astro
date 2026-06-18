@@ -65,9 +65,9 @@
       return;
     }
 
-    // Load first 10 results (each result.data() fetches full data)
+    // Load first 5 results (each result.data() fetches full data)
     const loaded = await Promise.all(
-      search.results.slice(0, 10).map((r) => r.data())
+      search.results.slice(0, 5).map((r) => r.data())
     );
 
     resultsEl.innerHTML = loaded

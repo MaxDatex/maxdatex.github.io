@@ -38,24 +38,20 @@ const { page } = Astro.props as { page: Page<CollectionEntry<'blog'>> };
       </div>
 
       <nav class="flex justify-center items-center gap-4 mt-12" aria-label="Pagination">
-  {page.url.prev
-    ? <a href={page.url.prev} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">← Prev</a>
-    : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">← Prev</span>
-  }
+        {page.url.prev
+          ? <a href={page.url.prev} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">← Prev</a>
+          : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">← Prev</span>
+        }
 
-  <span class="text-sm text-gray-500">{page.currentPage} / {page.lastPage}</span>
+        <span class="text-sm text-gray-500">{page.currentPage} / {page.lastPage}</span>
 
-  {page.url.next
-    ? <a href={page.url.next} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">Next →</a>
-    : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">Next →</span>
-  }
-</nav>
+        {page.url.next
+          ? <a href={page.url.next} class="px-4 py-2 text-sm rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700">Next →</a>
+          : <span class="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">Next →</span>
+        }
+      </nav>
 
-<p class="text-center text-xs text-gray-400 mt-3">{page.total} articles total</p>
-
-<p class="text-center text-xs text-gray-400 mt-3">
-  {page.total} articles total
-</p>
+      <!-- <p class="text-center text-xs text-gray-400 mt-3">{page.total} articles total</p> -->
 
       <p class="text-center text-xs text-gray-400 mt-3">
         Page {page.currentPage} of {page.lastPage} · {page.total} articles

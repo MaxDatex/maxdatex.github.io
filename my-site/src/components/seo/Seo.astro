@@ -62,7 +62,7 @@ const jsonLD = jsonLDGenerator({
 <!-- Using environment domain -->
 <meta name="twitter:domain" content={import.meta.env.SITE} />
 
-{robots && <meta name="robots" content="noindex, nofollow" />}
+<meta name="robots" content={robots ? "noindex, nofollow" : "index, follow"} />
 
 <!-- JSON LD -->
 <Fragment set:html={jsonLD} />

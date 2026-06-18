@@ -28,6 +28,16 @@ if(entry === undefined) {
   return Astro.redirect('/404');
 }
 
+// In frontmatter, after getting the entry
+const allArticles = await getCollection('blog');
+
+const relatedArticles = allArticles
+  .filter(a => 
+    a.slug !== entry.slug && // not the current post
+    a.data.tags.some(tag => entry.data.tags.includes(tag)) // shares a tag
+  )
+  .slice(0, 6); // show 6
+
 const { Content } = await entry.render();
 ---
 
@@ -35,6 +45,7 @@ const { Content } = await entry.render();
   title={entry.data.title}
   description={entry.data.summary}
   image={`/blog/${entry.data.image}`}
+  frontmatter={entry.data}
 >
 	<main class="space-y-40 mb-40 pt-24">
       <section class="bg-white">
@@ -54,6 +65,22 @@ const { Content } = await entry.render();
                   <div class="content prose lg:prose-lg">
                     <Content/>
                   </div>
+
+                  {relatedArticles.length > 0 && (
+                    <div class="mt-16 pt-8 border-t border-gray-200">
+                      <h3 class="text-xl font-bold mb-6">Related Articles</h3>
+                      <div class="grid gap-6 md:grid-cols-3">
+                        {relatedArticles.map(article => (
+                          <a href={`${import.meta.env.BASE_URL}articles/${article.slug}`} 
+                            class="block p-4 rounded-xl border border-gray-200 hover:border-black transition-colors">
+                            <p class="font-semibold text-gray-900 mb-1">{article.data.title}</p>
+                            <p class="text-sm text-gray-500 line-clamp-2">{article.data.summary}</p>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
               </div>
           </div>
       </section>

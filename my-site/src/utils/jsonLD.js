@@ -2,7 +2,6 @@ import siteData from "../data/siteData.json";
 import { slugify } from "./slugify";
 
 export default function jsonLDGenerator({ type, post, url }) {
-  // If the page has CMS data, use it.
   if (type === "post") {
     return `<script type="application/ld+json">
       {
@@ -13,23 +12,30 @@ export default function jsonLDGenerator({ type, post, url }) {
           "@id": "${url}"
         },
         "headline": "${post.title}",
-        "description": "${post.description}",
-        "image": "${post.image.src}",
+        "description": "${post.summary}",
+        "image": "${post.image}",
         "author": {
           "@type": "Person",
           "name": "${post.author}",
           "url": "/author/${slugify(post.author)}"
         },
-        "datePublished": "${post.date}"
+        "publisher": {
+          "@type": "Organization",
+          "name": "${siteData.title}",
+          "url": "${import.meta.env.SITE}"
+        },
+        "datePublished": "${post.pubDate}",
+        "dateModified": "${post.pubDate}"
       }
     </script>`;
   }
+
   return `<script type="application/ld+json">
       {
-      "@context": "https://schema.org/",
-      "@type": "WebSite",
-      "name": "${siteData.title}",
-      "url": "${import.meta.env.SITE}"
+        "@context": "https://schema.org/",
+        "@type": "WebSite",
+        "name": "${siteData.title}",
+        "url": "${import.meta.env.SITE}"
       }
     </script>`;
 }

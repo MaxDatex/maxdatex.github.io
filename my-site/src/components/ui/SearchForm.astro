@@ -1,96 +1,84 @@
 ---
-// No frontmatter needed unless you have imports
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-
-<form id="search-form" class="flex items-center" onsubmit="return false;">
-  <label for="search-input" class="sr-only">Search</label>
-  <div class="relative w-full">
-    <input
-      type="text"
-      id="query"
-      name="query"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-      placeholder="Search articles..."
-      autocomplete="off"
-    />
-  </div>
-  <button
-    type="submit"
-    id="search-btn"
-    class="p-2.5 ms-2 text-sm font-medium text-white bg-black rounded-lg border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300"
-  >
-    <svg
-      class="w-4 h-4"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 20 20"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+<div class="w-full">
+  <div class="flex items-center">
+    <label for="search-input" class="sr-only">Search</label>
+    <div class="relative w-full">
+      <input
+        type="text"
+        id="query"
+        name="query"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+        placeholder="Search articles..."
+        autocomplete="off"
       />
-    </svg>
-    <span class="sr-only">Search</span>
-  </button>
-</form>
+    </div>
+    <button
+      id="search-btn"
+      type="button"
+      class="p-2.5 ms-2 text-sm font-medium text-white bg-black rounded-lg border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300"
+    >
+      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <span class="sr-only">Search</span>
+    </button>
+  </div>
 
-<!-- Results render here -->
-<div id="search-results" class="mt-4 space-y-3"></div>
+  <div id="search-results" class="mt-4 space-y-3"></div>
+</div>
 
-<script is:inline>
-  async function runSearch(query) {
+<script is:inline define:vars={{ base }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("query");
+    const btn = document.getElementById("search-btn");
     const resultsEl = document.getElementById("search-results");
 
-    if (!query.trim()) {
-      resultsEl.innerHTML = "";
-      return;
+    async function runSearch(query) {
+      if (!query.trim()) {
+        resultsEl.innerHTML = "";
+        return;
+      }
+
+      if (!window.pagefind) {
+        window.pagefind = await import(`${base}/pagefind/pagefind.js`);
+        await window.pagefind.init();
+      }
+
+      const search = await window.pagefind.search(query);
+
+      if (search.results.length === 0) {
+        resultsEl.innerHTML = `<p class="text-sm text-gray-500">No results for "<strong>${query}</strong>".</p>`;
+        return;
+      }
+
+      const loaded = await Promise.all(
+        search.results.slice(0, 5).map((r) => r.data())
+      );
+
+      resultsEl.innerHTML = `
+        <p class="text-xs text-gray-400 mb-2">${search.results.length} results found</p>
+        ${loaded.map((r) => `
+          <a href="${r.url}" class="block p-3 rounded-lg border border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 transition-colors">
+            <p class="text-sm font-semibold text-gray-900">${r.meta?.title ?? r.url}</p>
+            <p class="text-xs text-gray-500 mt-1 line-clamp-2">${r.excerpt}</p>
+          </a>
+        `).join("")}
+      `;
     }
 
-    // Lazy-load pagefind on first use
-    if (!window.pagefind) {
-      window.pagefind = await import("/pagefind/pagefind.js");
-      await window.pagefind.init();
-    }
+    btn.addEventListener("click", () => runSearch(input.value));
 
-    const search = await window.pagefind.search(query);
+    let debounce;
+    input.addEventListener("input", () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => runSearch(input.value), 300);
+    });
 
-    if (search.results.length === 0) {
-      resultsEl.innerHTML = `<p class="text-sm text-gray-500">No results for "<strong>${query}</strong>".</p>`;
-      return;
-    }
-
-    // Load first 5 results (each result.data() fetches full data)
-    const loaded = await Promise.all(
-      search.results.slice(0, 5).map((r) => r.data())
-    );
-
-    resultsEl.innerHTML = loaded
-      .map(
-        (r) => `
-        <a href="${r.url}" class="block p-3 rounded-lg border border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 transition-colors">
-          <p class="text-sm font-semibold text-gray-900">${r.meta?.title ?? r.url}</p>
-          <p class="text-xs text-gray-500 mt-1 line-clamp-2">${r.excerpt}</p>
-        </a>`
-      )
-      .join("");
-  }
-
-  const form = document.getElementById("search-form");
-  const input = document.getElementById("query");
-
-  // Search on button click / Enter
-  form.addEventListener("submit", () => runSearch(input.value));
-
-  // Optional: live search as you type (debounced)
-  let debounce;
-  input.addEventListener("input", () => {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => runSearch(input.value), 300);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runSearch(input.value);
+    });
   });
 </script>

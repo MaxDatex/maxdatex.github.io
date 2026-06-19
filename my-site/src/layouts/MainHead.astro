@@ -4,12 +4,6 @@ import Seo from "../components/seo/Seo.astro";
 // Pass the contents to create SEO for the page
 const { title, description, image, frontmatter, robots } = Astro.props;
 const gaId = import.meta.env.PUBLIC_GA_ID;
-const gaScript = gaId
-  ? `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${gaId}');`
-  : "";
 ---
 
 <head>
@@ -35,11 +29,14 @@ gtag('config', '${gaId}');`
   />
 
   <!-- Preconnect fonts, images... -->
-  <!-- Google tag (gtag.js) - loaded only when PUBLIC_GA_ID is set -->
-  {gaId ? (
-    <>
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-      <script is:inline set:html={gaScript}></script>
-    </>
-  ) : null}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8H6CNSKDC"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Z8H6CNSKDC');
+  </script>
+
 </head>

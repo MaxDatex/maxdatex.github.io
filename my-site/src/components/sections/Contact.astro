@@ -2,6 +2,8 @@
 import Form from "../ui/Form.astro";
 import SectionTitle from "../ui/SectionTitle.astro";
 import Section from "./Section.astro";
+import { Image } from "astro:assets";
+import decorForm from "../../assets/pics/contact-pic.png";
 ---
 
 <Section id="contact">
@@ -10,6 +12,13 @@ import Section from "./Section.astro";
       sectionTitle="Contact Us"
       description="Connect with Us: Let's Discuss Your Digital Marketing Needs"
     />
-    <Form />
+    <div
+      class="flex relative justify-start items-center p-[60px] bg-[#F3F3F3] rounded-[45px] overflow-hidden"
+    >
+      <Form />
+      <picture class="absolute right-[-25%] top-[2%] bottom-[2%] hidden lg:block">
+        <Image src={decorForm} alt="decor" />
+      </picture>
+    </div>
   </div>
 </Section>

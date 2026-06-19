@@ -1,12 +1,8 @@
 ---
-import { Image } from "astro:assets";
-import decorForm from "../../assets/pics/contact-pic.png";
+const { rounded = false } = Astro.props;
 ---
 
-<div
-  class="flex relative justify-start items-center p-[60px] bg-[#F3F3F3] rounded-[45px] overflow-hidden"
->
-  <form class="bg-gray sm:p-6 h-full w-full lg:max-w-lg"
+  <form class={`bg-gray sm:p-6 h-full w-full lg:max-w-lg ${rounded ? 'rounded-[10px]' : ''}`}
     id="contact-form"
   >
 
@@ -101,7 +97,3 @@ import decorForm from "../../assets/pics/contact-pic.png";
       }
     });
   </script>
-  <picture class="absolute right-[-25%] top-[2%] bottom-[2%] hidden lg:block">
-    <Image src={decorForm} alt="decor" />
-  </picture>
-</div>

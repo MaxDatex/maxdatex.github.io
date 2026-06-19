@@ -30,6 +30,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 
   <!-- Preconnect fonts, images... -->
   <!-- Google tag (gtag.js) - loaded only when PUBLIC_GA_ID is set -->
+  {gaId}
   {gaId ? (
     <>
       <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>

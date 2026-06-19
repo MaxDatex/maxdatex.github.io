@@ -26,6 +26,7 @@ concurrency:
 
 env:
   BUILD_PATH: "my-site"
+  PUBLIC_GA_ID: ${{ secrets.PUBLIC_GA_ID }}
 
 jobs:
   build:

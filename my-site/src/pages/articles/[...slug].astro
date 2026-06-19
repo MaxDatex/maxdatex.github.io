@@ -72,7 +72,7 @@ const { Content } = await entry.render();
                       <div class="grid gap-6 md:grid-cols-3">
                         {relatedArticles.map(article => (
                           <a href={`${import.meta.env.BASE_URL}articles/${article.slug}`} 
-                            class="block p-4 rounded-xl border border-gray-200 hover:border-black transition-colors">
+                            class="btn-forth block p-4 rounded-xl border border-gray-200 hover:border-black transition-colors">
                             <p class="font-semibold text-gray-900 mb-1">{article.data.title}</p>
                             <p class="text-sm text-gray-500 line-clamp-2">{article.data.summary}</p>
                           </a>

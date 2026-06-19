@@ -121,6 +121,13 @@
       @apply bg-white text-black transform scale-105;
     }
 
+    .btn-forth {
+      @apply bg-white text-black rounded-lg px-[35px] py-5 transition-all duration-200;
+    }
+    .btn-forth:hover {
+      @apply bg-green text-black transform scale-105;
+    }
+
     .greenhead {
       @apply bg-green text-black rounded-[7px] px-[7px];
     }
@@ -158,4 +165,8 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+h2, h3, h4 {
+  scroll-margin-top: 110px; /* height of your navbar */
 }

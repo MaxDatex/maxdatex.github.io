@@ -8,5 +8,4 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://maxdatex.github.io",
   integrations: [tailwind(), sitemap()],
-  // adapter: vercel(),
 });

@@ -61,7 +61,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       resultsEl.innerHTML = `
         <p class="text-xs text-gray-400 mb-2">${search.results.length} results found</p>
         ${loaded.map((r) => `
-          <a href="${r.url}" class="btn-secondary block p-3 rounded-lg border border-gray-200 "> 
+          <a href="${r.url}" class="btn-search block p-3 rounded-lg border border-gray-200 "> 
             
             <p class="text-sm font-semibold text-gray-900">${r.meta?.title ?? r.url}</p>
             <p class="text-xs text-gray-500 mt-1 line-clamp-2">${r.excerpt}</p>

@@ -128,6 +128,13 @@
       @apply bg-green text-black transform scale-105;
     }
 
+    .btn-search {
+      @apply bg-transparent text-black px-[35px] py-5 rounded-lg border border-solid border-black transition-all duration-200;
+    }
+    .btn-search:hover {
+      @apply bg-black text-white border-green transform;
+    }
+
     .greenhead {
       @apply bg-green text-black rounded-[7px] px-[7px];
     }

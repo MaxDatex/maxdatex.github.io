@@ -3,72 +3,54 @@ import SectionTitle from "../ui/SectionTitle.astro";
 import ServiceCard from "../ui/ServiceCard.astro";
 import Section from "./Section.astro";
 
-import c1 from "../../assets/pics/card-pic1.png";
-import c2 from "../../assets/pics/card-pic2.png";
-import c3 from "../../assets/pics/card-pic3.png";
-import c4 from "../../assets/pics/card-pic4.png";
-import c5 from "../../assets/pics/card-pic5.png";
-import c6 from "../../assets/pics/card-pic6.png";
+import c1 from "../../assets/pics/Flows-gray.png";
+import c2 from "../../assets/pics/Deliverability-green.png";
+import c3 from "../../assets/pics/Campaign-dark.png";
+import c4 from "../../assets/pics/Segment-gray.png";
 
 const cards = [
   {
     index: 1,
-    titleTop: "Search Engine",
-    titleBottom: "Optimization",
+    titleTop: "Core Automation",
+    titleBottom: "& Flow Setup",
     img: c1,
-    alt: "SEO",
-    link: "https://google.com",
+    alt: "Setting up revenue-generating automated flows",
+    link: "#flows",
   },
   {
     index: 2,
-    titleTop: "Pay-per-click",
-    titleBottom: "advertising",
+    titleTop: "Deliverability Setup",
+    titleBottom: "& Domain Warmup",
     img: c2,
-    alt: "SEO",
-    link: "https://google.com",
+    alt: "Fixing technical DNS setup and inbox placement",
+    link: "#deliverability",
   },
   {
     index: 3,
-    titleTop: "Social Media",
-    titleBottom: "Marketing",
+    titleTop: "Revenue-Driven",
+    titleBottom: "Campaign Management",
     img: c3,
-    alt: "SEO",
-    link: "https://google.com",
+    alt: "Planning and executing regular email campaigns",
+    link: "#campaigns",
   },
   {
     index: 1,
-    titleTop: "Email",
-    titleBottom: "Marketing",
+    titleTop: "List Segmentation",
+    titleBottom: "& Clean-up Optimization",
     img: c4,
-    alt: "SEO",
-    link: "https://google.com",
-  },
-  {
-    index: 2,
-    titleTop: "Content",
-    titleBottom: "Creation",
-    img: c5,
-    alt: "SEO",
-    link: "https://google.com",
-  },
-  {
-    index: 3,
-    titleTop: "Analytics and",
-    titleBottom: "Tracking",
-    img: c6,
-    alt: "SEO",
-    link: "https://google.com",
+    alt: "Audience targeting and list hygiene",
+    link: "#segmentation",
   },
 ];
 
 const description =
-  "At our digital marketing agency, we offer a range of services to help businesses grow and succeed online. These services include";
+  "Done-for-you email marketing infrastructure built explicitly for B2C brands. We handle the technical setup, the strategy, and the execution:";
 ---
 
 <Section id="services">
-  <div class="mt-[140px] mb-5">
+  <div class="mt-[40px] mb-5">
     <SectionTitle sectionTitle="Services" description={description} />
-    <div class="grid lg:grid-cols-2 lg:grid-rows-3 gap-10">
+    <div class="grid lg:grid-cols-2 lg:grid-rows-2 gap-10">
       {
         cards.map((card) => (
           <ServiceCard

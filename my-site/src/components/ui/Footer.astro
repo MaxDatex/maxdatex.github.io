@@ -15,10 +15,13 @@ const logos = [
 const links = [
   { name: "About us", href: "#about" },
   { name: "Services", href: "#services" },
-  { name: "Use Cases", href: "#cases" },
-  { name: "Pricing", href: "#Testimonials" },
-  { name: "Blog", href: "#Home" },
+  // { name: "Use Cases", href: "#cases" },
+  // { name: "Pricing", href: "#Testimonials" },
+  { name: "Blog", href: "/articles" },
+  { name: "Contact", href: "#contact" },
 ];
+
+const currentYear = new Date().getFullYear();
 ---
 
 <section class="sm:px-5">
@@ -89,35 +92,7 @@ const links = [
         class="flex flex-col lg:flex-row h-20 justify-center mt-4 text-center md:justify-between md:mt-0"
       >
         <span
-          >2024 Positivus - Made With <a
-            class="underline"
-            target="_blank"
-            href="https://astro.build">Astro</a
-          > by 
-          <a 
-          class="underline"
-          target="_blank"
-          href="https://manulthanura.com">Manul</a
-          ></span
-        >&nbsp
-        <span>
-          Credits (
-          <a
-            href="https://www.olgaskuja.design/"
-            target="_blank"
-            class="underline">Olga</a
-          >,
-          <a
-            href="https://esteban-vasquez.netlify.app/"
-            target="_blank"
-            class="underline">Esteban</a
-          >)
-          <span> &</span>
-          <a
-            class="underline"
-            href="https://creativecommons.org/licenses/by/4.0/"
-            target="_blank">Licence</a
-          >
+          >{currentYear} Positivus
         </span>
       </div>
     </div>
